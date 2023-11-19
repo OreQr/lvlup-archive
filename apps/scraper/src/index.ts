@@ -115,7 +115,7 @@ const processPost = async (topicId: number, rawTopic: string) => {
     });
   });
 
-  const comments: Comment[] = posts.slice(0, -1).map((post) => {
+  const comments: Comment[] = posts.slice(1).map((post) => {
     downloadStatic(
       new URL(post.avatar_template.replace("{size}", "250"), url).href,
       `../www/public${decodeURIComponent(

@@ -39,3 +39,10 @@ export interface Comment {
   updated_at: string
   created_at: string
 }
+
+export interface PostMetadata {
+  id: number
+  topicId: number
+  title: string
+  slug: string
+}
