@@ -1,23 +1,77 @@
 import "dotenv/config";
 import { download, save } from "./lib/utils";
-import { SingleBar } from "cli-progress";
+import { Presets, MultiBar } from "cli-progress";
 import { Topic } from "./types/generated";
 import { Post, Comment } from "./types";
 import * as cheerio from "cheerio";
+import Bottleneck from "bottleneck";
 
 const url = new URL(process.env.URL!);
 const posts = Number(process.env.POSTS!);
 const fetch_count = Number(process.env.FETCH!);
 
-const progress = new SingleBar({});
+const multibar = new MultiBar(
+  {
+    format: `{title} [{bar}] {percentage}% | ETA: {eta}s | {value}/{total}`,
+  },
+  Presets.shades_classic,
+);
+
+const progress = multibar.create(fetch_count, 0, { title: "Posts" });
+const staticProgress = multibar.create(0, 0, { title: "Static files" });
 
 const forumDirectory = "../www/public";
+
+const staticLimiter = new Bottleneck({
+  maxConcurrent: 10,
+});
+
+const ratelimiter1 = Number(process.env.DISCOURSE_MAX_REQS_PER_IP_PER_MINUTE!);
+const limiter1 = new Bottleneck({
+  reservoir: ratelimiter1,
+  reservoirRefreshAmount: ratelimiter1,
+  reservoirRefreshInterval: 60 * 1000,
+  minTime: (60 * 1000) / ratelimiter1,
+  maxConcurrent: 1,
+});
+
+const ratelimiter2 = Number(
+  process.env.DISCOURSE_MAX_REQS_PER_IP_PER_10_SECONDS!,
+);
+const limiter2 = new Bottleneck({
+  reservoir: ratelimiter2,
+  reservoirRefreshAmount: ratelimiter2,
+  reservoirRefreshInterval: 10 * 1000,
+  maxConcurrent: 1,
+});
 
 // Fetch posts 💀
 const fetchPosts = async () => {
   for (let i = posts; i > posts - fetch_count; i--) {
-    await fetchPost(i);
+    await limiter1.schedule(
+      async () => await limiter2.schedule(async () => await fetchPost(i)),
+    );
   }
+};
+
+const downloadStatic = async (url: string, output: string) => {
+  staticLimiter.submit(
+    async (callback) => {
+      staticProgress.setTotal(staticProgress.getTotal() + 1);
+      let content;
+      try {
+        content = await download(url, output, "buffer");
+      } catch (error) {
+        console.log(error);
+        callback(error, null);
+        return staticProgress.setTotal(staticProgress.getTotal() - 1);
+      }
+      staticProgress.increment();
+      callback(null, content);
+      return content;
+    },
+    () => {},
+  );
 };
 
 const fetchPost = async (topicId: number) => {
@@ -54,11 +108,7 @@ const processPost = async (topicId: number, rawTopic: string) => {
           .slice(0, -1)
           .join("");
 
-        download(
-          imageUrl,
-          `../www/public${new URL(imageUrl).pathname}`,
-          "buffer",
-        );
+        downloadStatic(imageUrl, `../www/public${new URL(imageUrl).pathname}`);
 
         post.raw = post.raw.replace(replacementRegex, pathname);
       }
@@ -66,12 +116,11 @@ const processPost = async (topicId: number, rawTopic: string) => {
   });
 
   const comments: Comment[] = posts.slice(0, -1).map((post) => {
-    download(
+    downloadStatic(
       new URL(post.avatar_template.replace("{size}", "250"), url).href,
       `../www/public${decodeURIComponent(
         new URL(post.avatar_template, url).pathname,
       )}`,
-      "buffer",
     );
     return {
       id: post.id,
@@ -89,18 +138,16 @@ const processPost = async (topicId: number, rawTopic: string) => {
   });
 
   const rawPost = posts[0];
-  download(
+  downloadStatic(
     new URL(rawPost.avatar_template.replace("{size}", "250"), url).href,
     `../www/public${decodeURIComponent(
       new URL(rawPost.avatar_template, url).pathname,
     )}`,
-    "buffer",
   );
   if (topic.image_url) {
-    download(
+    downloadStatic(
       topic.image_url,
       `../www/public${new URL(topic.image_url).pathname}`,
-      "buffer",
     );
   }
   const post: Post = {
@@ -134,12 +181,10 @@ const processPost = async (topicId: number, rawTopic: string) => {
 };
 
 (async () => {
-  progress.start(fetch_count, 0);
-
   await download(
     new URL("/site.json", url).href,
     `${forumDirectory}/site.json`,
   );
   await fetchPosts();
-  progress.stop();
+  multibar.stop();
 })();

@@ -8,10 +8,12 @@
   },
   "dependencies": {
     "@types/cli-progress": "^3.11.5",
+    "bottleneck": "^2.19.5",
     "cheerio": "^1.0.0-rc.12",
     "cli-progress": "^3.12.0",
     "dotenv": "^16.3.1",
-    "node-fetch": "^3.3.2"
+    "node-fetch": "^3.3.2",
+    "p-retry": "^6.1.0"
   },
   "devDependencies": {
     "@types/node": "^20.9.2",

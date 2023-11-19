@@ -1,12 +1,13 @@
 import fetch from "node-fetch";
 import * as fs from "fs";
+import pRetry from "p-retry";
 
 export const download = async (
   url: string,
   output?: string,
   type: "string" | "buffer" = "string",
 ): Promise<any> => {
-  try {
+  const request = async () => {
     if (output) {
       if (fs.existsSync(output)) return;
     }
@@ -15,7 +16,17 @@ export const download = async (
 
     if (!response.ok) {
       if (response.status === 404) return;
-      throw new Error(`${url} - ${response.status} (${response.statusText})`);
+      const reponseText = await response.text();
+      console.error(
+        `${url} - ${response.status} (${
+          reponseText ? reponseText : response.statusText
+        })`,
+      );
+      throw new Error(
+        `${url} - ${response.status} (${
+          reponseText ? reponseText : response.statusText
+        })`,
+      );
     }
 
     let content;
@@ -31,9 +42,15 @@ export const download = async (
     if (output) save(content, output);
 
     return content;
-  } catch (error) {
-    console.error(error);
-  }
+  };
+
+  return await pRetry(request, {
+    onFailedAttempt: (error) => {
+      console.error(`${url} | ${error.message}`);
+    },
+    retries: 10,
+    minTimeout: 1000,
+  });
 };
 
 export const save = (content: any, output: string) => {
