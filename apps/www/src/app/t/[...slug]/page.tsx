@@ -1,6 +1,6 @@
 import { getPost, getPostsMetadata } from "@/lib/posts"
 
-export const generateStaticParams = async () => {
+export const generateStaticParams = () => {
   const posts = getPostsMetadata()
 
   return posts.map((post) => ({
@@ -15,5 +15,5 @@ interface PostPageProps {
 export default function PostPage({ params }: PostPageProps) {
   const post = getPost(Number(params.slug[1]))
 
-  return <pre>{post.title}</pre>
+  return <div className="py-6">{post.title}</div>
 }
