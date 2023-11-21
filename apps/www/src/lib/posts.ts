@@ -31,8 +31,13 @@ export const getPostsMetadata = (start?: number, end?: number) => {
     return {
       id: post.id,
       topicId: post.topic_id,
+      user: post.user,
       title: post.title,
       slug: post.slug,
+      tags: post.tags,
+      categoryId: post.category_id,
+      comments: post.comments.length,
+      createdAt: new Date(post.created_at),
     }
   })
 

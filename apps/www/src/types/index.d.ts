@@ -43,6 +43,11 @@ export interface Comment {
 export interface PostMetadata {
   id: number
   topicId: number
+  user: User
+  categoryId: number
   title: string
+  tags: string[]
+  comments: number
   slug: string
+  createdAt: Date
 }
