@@ -49,7 +49,7 @@ export default async function Markdown({ children }: MarkdownProps) {
           {
             properties: {
               className: ["subheading-anchor"],
-              ariaLabel: "Link to section",
+              ariaLabel: "Link do sekcji",
             },
           },
         ],

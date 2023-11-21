@@ -11,13 +11,19 @@ export const getPost = (topicId: number): Post => {
   return post
 }
 
-export const getPostsMetadata = () => {
+export const getPosts = (): string[] => {
   const files = fs.readdirSync(folder)
+
   const posts = files
     .filter((file) => file.endsWith(".json"))
     .sort((a, b) => a.localeCompare(b, undefined, { numeric: true }))
     .reverse()
-    .slice(0, 20)
+
+  return posts
+}
+
+export const getPostsMetadata = (start?: number, end?: number) => {
+  const posts = getPosts().slice(start, end)
 
   const postPreviews: PostMetadata[] = posts.map((postFile) => {
     const post = getPost(Number(postFile.split(".")[0]))
