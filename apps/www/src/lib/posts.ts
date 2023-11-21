@@ -17,7 +17,7 @@ export const getPostsMetadata = () => {
     .filter((file) => file.endsWith(".json"))
     .sort((a, b) => a.localeCompare(b, undefined, { numeric: true }))
     .reverse()
-    .slice(0, 10)
+    .slice(0, 20)
 
   const postPreviews: PostMetadata[] = posts.map((postFile) => {
     const post = getPost(Number(postFile.split(".")[0]))

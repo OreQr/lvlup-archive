@@ -1,4 +1,6 @@
+import "@/styles/mdx.css"
 import { getPost, getPostsMetadata } from "@/lib/posts"
+import Markdown from "@/components/markdown"
 
 export const generateStaticParams = () => {
   const posts = getPostsMetadata()
@@ -15,5 +17,9 @@ interface PostPageProps {
 export default function PostPage({ params }: PostPageProps) {
   const post = getPost(Number(params.slug[1]))
 
-  return <div className="py-6">{post.title}</div>
+  return (
+    <div className="py-6">
+      <Markdown>{post.raw}</Markdown>
+    </div>
+  )
 }
