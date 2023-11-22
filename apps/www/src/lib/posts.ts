@@ -22,7 +22,10 @@ export const getPosts = (): string[] => {
   return posts
 }
 
-export const getPostsMetadata = (start?: number, end?: number) => {
+export const getPostsMetadata = (
+  start?: number,
+  end?: number
+): PostMetadata[] => {
   const posts = getPosts().slice(start, end)
 
   const postPreviews: PostMetadata[] = posts.map((postFile) => {

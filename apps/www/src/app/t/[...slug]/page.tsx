@@ -1,4 +1,7 @@
 import "@/styles/mdx.css"
+import { Metadata } from "next"
+
+import { siteConfig } from "@/config/site"
 import { getPost, getPostsMetadata } from "@/lib/posts"
 import { Separator } from "@/components/ui/separator"
 import DateTime from "@/components/date-time"
@@ -16,6 +19,35 @@ export const generateStaticParams = () => {
 
 interface PostPageProps {
   params: { slug: string[] }
+}
+
+export const generateMetadata = ({ params }: PostPageProps): Metadata => {
+  const post = getPost(Number(params.slug[1]))
+
+  const title = post.fancy_title ? post.fancy_title : post.title
+  const description = siteConfig.description
+
+  const ogImages = post.image ? [{ url: post.image }] : undefined
+
+  return {
+    metadataBase: new URL(process.env.APP_URL!),
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      type: "article",
+      url: `/t/${post.slug}/${post.topic_id}`,
+      publishedTime: post.created_at,
+      images: ogImages,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description: siteConfig.description,
+      images: ogImages,
+    },
+  }
 }
 
 export default function PostPage({ params }: PostPageProps) {
