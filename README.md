@@ -14,7 +14,7 @@ git clone https://github.com/OreQr/lvlup-archive
 
 cd ./lvlup-archive/apps/www
 
-wget https://lvlup.oreq.xyz // Pobranie forum
+wget https://lvlup.oreq.xyz/forum.zip // Pobranie forum
 unzip forum.zip
 
 npm install
