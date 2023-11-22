@@ -25,6 +25,7 @@ export default async function Markdown({ children }: MarkdownProps) {
           rehypePrettyCode,
           {
             theme: "github-dark",
+            keepBackground: false,
             onVisitLine(node: { children: string | any[] }) {
               // Prevent lines from collapsing in `display: grid` mode, and allow empty
               // lines to be copy/pasted

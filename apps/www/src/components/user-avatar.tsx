@@ -2,6 +2,7 @@ import Image from "next/image"
 import type { User } from "@/types"
 import { AvatarProps } from "@radix-ui/react-avatar"
 
+import { cn } from "@/lib/utils"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { Icons } from "@/components/icons"
 
@@ -18,7 +19,13 @@ export function UserAvatar({
   ...props
 }: UserAvatarProps) {
   return (
-    <Avatar {...props}>
+    <Avatar
+      {...props}
+      className={cn(
+        user.username === "system" && "rounded-none",
+        props.className
+      )}
+    >
       {user.avatar ? (
         <Image alt="avatar" width={width} height={height} src={user.avatar} />
       ) : (

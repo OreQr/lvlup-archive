@@ -1,8 +1,8 @@
 export type SiteConfig = typeof siteConfig
 
 export const siteConfig = {
-  name: "LVL UP",
-  description: "Archiwum forum lvlup.",
+  name: "Archiwum LVL UP",
+  description: "Archiwum oficjalnego forum lvlup.pro",
   mainNav: [],
   links: {
     site: "https://lvlup.pro",
