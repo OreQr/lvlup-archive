@@ -24,13 +24,13 @@ export default function HomePage({ params }: { params: { page: string } }) {
   const postsMetadata: PostMetadata[] = getPostsMetadata(start, end)
 
   return (
-    <div className="flex flex-col space-y-4 py-6">
+    <>
       <div className="flex flex-col space-y-2">
         {postsMetadata.map((postMetadata) => (
           <PostPreview key={postMetadata.id} metadata={postMetadata} />
         ))}
       </div>
       <Pagination page={page} pages={pagesCount} />
-    </div>
+    </>
   )
 }

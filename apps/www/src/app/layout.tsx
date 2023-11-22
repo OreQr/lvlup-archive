@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from "next"
 
 import "@/styles/globals.css"
 import { siteConfig } from "@/config/site"
-import { fontHeading, fontMono, fontSans } from "@/lib/fonts"
+import { fontMono, fontSans } from "@/lib/fonts"
 import { cn } from "@/lib/utils"
 import SiteFooter from "@/components/site-footer"
 import { SiteHeader } from "@/components/site-header"
@@ -40,8 +40,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         className={cn(
           "min-h-screen bg-background font-sans antialiased",
           fontSans.variable,
-          fontMono.variable,
-          fontHeading.variable
+          fontMono.variable
         )}
       >
         <ThemeProvider
