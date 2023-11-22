@@ -76,7 +76,7 @@ const downloadStatic = async (url: string, output: string) => {
 
 const fetchPost = async (topicId: number) => {
   const topic = await download(
-    new URL(`/t/${topicId}.json?include_raw=true`, url).href,
+    new URL(`/t/${topicId}.json?include_raw=true&print=true`, url).href,
   );
   if (!topic) return progress.setTotal(progress.getTotal() - 1);
 
@@ -130,6 +130,7 @@ const processPost = async (topicId: number, rawTopic: string) => {
         name: post.name,
         avatar: post.avatar_template,
         username: post.username,
+        staff: post.staff,
         title: post.user_title,
       },
       created_at: post.created_at,
@@ -166,6 +167,7 @@ const processPost = async (topicId: number, rawTopic: string) => {
       name: rawPost.name,
       avatar: rawPost.avatar_template,
       username: rawPost.username,
+      staff: rawPost.staff,
       title: rawPost.user_title,
     },
     category_id: topic.category_id,
