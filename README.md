@@ -4,14 +4,20 @@
 ![Next.js](https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white)
 
 # lvlup-archive
+
 Archiwum oficjalnego forum lvlup.pro
 
 Instalacja i uruchomienie front-endu:
-```bash
-cd ./apps/www
 
-wget ... // Pobranie forum
+```bash
+git clone https://github.com/OreQr/lvlup-archive
+
+cd ./lvlup-archive/apps/www
+
+wget https://lvlup.oreq.xyz // Pobranie forum
 unzip forum.zip
+
+npm install
 
 npm run build
 
@@ -19,6 +25,7 @@ npm start
 ```
 
 ### Do zrobienia
+
 - [ ] Wsparcie wszystkich emotek
 - [ ] Lepsze ui wyszukiwarki
 - [ ] Przekierowywanie linków na archiwum
