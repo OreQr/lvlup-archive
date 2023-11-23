@@ -1,5 +1,7 @@
 import "@/styles/mdx.css"
 import { Metadata } from "next"
+import { notFound, redirect } from "next/navigation"
+import { Post } from "@/types"
 
 import { siteConfig } from "@/config/site"
 import { getPost, getPostsMetadata } from "@/lib/posts"
@@ -21,8 +23,27 @@ interface PostPageProps {
   params: { slug: string[] }
 }
 
+const getPostFromParams = ({ params }: PostPageProps) => {
+  const short = !isNaN(Number(params.slug[0])) && !params.slug[1]
+
+  let post: Post
+  try {
+    post = getPost(short ? Number(params.slug[0]) : Number(params.slug[1]))
+  } catch (error: any) {
+    if (error.code === "ENOENT") {
+      return notFound()
+    } else {
+      throw new Error(error)
+    }
+  }
+
+  if (!short && params.slug[0] !== post.slug) return notFound()
+  if (short) return redirect(`/t/${post.slug}/${post.topic_id}`)
+  return post
+}
+
 export const generateMetadata = ({ params }: PostPageProps): Metadata => {
-  const post = getPost(Number(params.slug[1]))
+  const post = getPostFromParams({ params })
 
   const title = post.fancy_title ? post.fancy_title : post.title
   const description = siteConfig.description
@@ -51,7 +72,7 @@ export const generateMetadata = ({ params }: PostPageProps): Metadata => {
 }
 
 export default function PostPage({ params }: PostPageProps) {
-  const post = getPost(Number(params.slug[1]))
+  const post = getPostFromParams({ params })
 
   return (
     <div className="space-y-4 py-6">
