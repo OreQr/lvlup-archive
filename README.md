@@ -26,9 +26,9 @@ npm start
 
 ### Do zrobienia
 
+- [x] Przekierowywanie linków na archiwum
 - [ ] Wsparcie wszystkich emotek
 - [ ] Lepsze ui wyszukiwarki
-- [ ] Przekierowywanie linków na archiwum
 
 ## Licencja
 
