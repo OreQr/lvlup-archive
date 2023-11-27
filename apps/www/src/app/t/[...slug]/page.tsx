@@ -4,6 +4,7 @@ import { notFound, redirect } from "next/navigation"
 import { Post } from "@/types"
 
 import { siteConfig } from "@/config/site"
+import { getDescription, postToRaw } from "@/lib/markdown"
 import { getPost, getPostsMetadata } from "@/lib/posts"
 import { Separator } from "@/components/ui/separator"
 import DateTime from "@/components/date-time"
@@ -42,11 +43,13 @@ const getPostFromParams = ({ params }: PostPageProps) => {
   return post
 }
 
-export const generateMetadata = ({ params }: PostPageProps): Metadata => {
+export const generateMetadata = async ({
+  params,
+}: PostPageProps): Promise<Metadata> => {
   const post = getPostFromParams({ params })
 
   const title = post.fancy_title ? post.fancy_title : post.title
-  const description = siteConfig.description
+  const description = await getDescription(post.raw)
 
   const ogImages = post.image ? [{ url: post.image }] : undefined
 
