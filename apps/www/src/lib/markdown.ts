@@ -15,6 +15,7 @@ const stripMarkdown = async (raw: string) =>
   bbcodeToRaw(String(await remark().use(strip).process(raw)))
 
 export const htmlImagesToMarkdown = (html: string): string => {
+  if (!html) return html
   const $ = cheerio.load(html)
 
   $("img").each((index, element) => {
