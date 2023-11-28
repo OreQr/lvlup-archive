@@ -4,12 +4,14 @@ import { notFound, redirect } from "next/navigation"
 import { Post } from "@/types"
 
 import { siteConfig } from "@/config/site"
-import { getDescription, postToRaw } from "@/lib/markdown"
+import { getDescription } from "@/lib/markdown"
 import { getPost, getPostsMetadata } from "@/lib/posts"
 import { Separator } from "@/components/ui/separator"
 import DateTime from "@/components/date-time"
 import Markdown from "@/components/markdown"
 import PostFooter from "@/components/post-footer"
+import PostNav from "@/components/post/post-nav"
+import ScrollPost from "@/components/post/scroll-post"
 import UserProfile from "@/components/user-profile"
 
 export const generateStaticParams = () => {
@@ -77,43 +79,54 @@ export const generateMetadata = async ({
 export default function PostPage({ params }: PostPageProps) {
   const post = getPostFromParams({ params })
 
+  const post_number = Number(params.slug[2])
+
   return (
-    <div className="space-y-4 py-6">
-      <div className="space-y-1.5">
-        <div className="space-y-4">
-          <div className="space-y-1.5">
-            <h1 className="text-2xl font-semibold">
-              {post.fancy_title ? post.fancy_title : post.title}
-            </h1>
-            <PostFooter
-              metadata={{ categoryId: post.category_id, tags: post.tags }}
-            />
-          </div>
-          <div className="flex items-center justify-between">
-            <UserProfile user={post.user} />
-            <DateTime time={post.created_at} />
-          </div>
-        </div>
-        <article>
-          <Markdown>{post.raw}</Markdown>
-        </article>
-      </div>
-      <div className="space-y-4">
-        {post.comments.map((comment) => (
-          <div className="space-y-4" key={comment.id}>
-            <Separator />
+    <>
+      <ScrollPost post_number={post_number} />
+      <div className="space-y-4 py-6">
+        <div className="space-y-1.5">
+          <div className="space-y-4">
             <div className="space-y-1.5">
-              <div className="flex items-center justify-between">
-                <UserProfile user={comment.user} />
-                <DateTime time={comment.created_at} />
-              </div>
-              <div>
-                <Markdown>{comment.raw}</Markdown>
-              </div>
+              <h1 className="text-2xl font-semibold">
+                {post.fancy_title ? post.fancy_title : post.title}
+              </h1>
+              <PostFooter
+                metadata={{ categoryId: post.category_id, tags: post.tags }}
+              />
+            </div>
+            <div className="flex items-center justify-between">
+              <UserProfile user={post.user} />
+              <DateTime time={post.created_at} />
             </div>
           </div>
-        ))}
+          <article>
+            <Markdown>{post.raw}</Markdown>
+          </article>
+          <PostNav post={{ ...post, post_number: 1 }} />
+        </div>
+        <div className="space-y-4">
+          {post.comments.map((comment) => (
+            <div
+              className="space-y-4"
+              id={`post-${comment.post_number}`}
+              key={comment.id}
+            >
+              <Separator />
+              <div className="space-y-1.5">
+                <div className="flex items-center justify-between">
+                  <UserProfile user={comment.user} />
+                  <DateTime time={comment.created_at} />
+                </div>
+                <div>
+                  <Markdown>{comment.raw}</Markdown>
+                </div>
+                <PostNav post={comment} />
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
-    </div>
+    </>
   )
 }

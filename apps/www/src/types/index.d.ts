@@ -35,6 +35,7 @@ export interface Post {
 
 export interface Comment {
   id: number
+  post_number: number
   raw: string
   user: User
   updated_at: string

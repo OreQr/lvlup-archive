@@ -6,6 +6,7 @@ import emoji from "remark-emoji"
 import remarkGfm from "remark-gfm"
 
 import { bbcodeToMarkdown } from "@/lib/bbcode"
+import { htmlImagesToMarkdown } from "@/lib/markdown"
 import { rewriteURL } from "@/lib/rewrites"
 
 import { MdxContent } from "./mdx-content"
@@ -15,7 +16,7 @@ interface MarkdownProps {
 }
 
 export default async function Markdown({ children }: MarkdownProps) {
-  const source = bbcodeToMarkdown(children)
+  const source = bbcodeToMarkdown(htmlImagesToMarkdown(children))
 
   const serialized = await serialize(
     rewriteURL(source, process.env.FORUM_URL!, process.env.APP_URL!),

@@ -5,6 +5,7 @@ import { Topic } from "./types/generated";
 import { Post, Comment } from "./types";
 import * as cheerio from "cheerio";
 import Bottleneck from "bottleneck";
+import { isURL } from "./lib/utils";
 
 const url = new URL(process.env.URL!);
 const posts = Number(process.env.POSTS!);
@@ -94,23 +95,41 @@ const processPost = async (topicId: number, rawTopic: string) => {
 
   // Change and download images 😭
   posts.map((post) => {
-    const $ = cheerio.load(post.cooked);
+    const $cooked = cheerio.load(post.cooked);
 
-    $("img[data-base62-sha1]").each((index, element) => {
-      const sha1Value = $(element).attr("data-base62-sha1");
-      const imageUrl = $(element).attr("src");
+    $cooked("img[data-base62-sha1]").each((index, element) => {
+      const sha1Value = $cooked(element).attr("data-base62-sha1");
+      const imageUrl = $cooked(element).attr("src");
 
       if (sha1Value && imageUrl) {
         const replacementRegex = new RegExp(`upload://${sha1Value}`, "g");
 
-        const pathname = new URL(imageUrl).pathname
-          .split(".")
-          .slice(0, -1)
-          .join("");
+        const newUrl = isURL(imageUrl)
+          ? new URL(imageUrl)
+          : new URL(imageUrl, url.href);
 
-        downloadStatic(imageUrl, `../www/public${new URL(imageUrl).pathname}`);
+        const pathname = newUrl.pathname.split(".").slice(0, -1).join("");
+
+        downloadStatic(newUrl.href, `../www/public${newUrl.pathname}`);
 
         post.raw = post.raw.replace(replacementRegex, pathname);
+      }
+    });
+
+    if (!post.raw) return;
+    const $raw = cheerio.load(post.raw);
+
+    $raw("img").each((index, element) => {
+      const imageUrl = $cooked(element).attr("src");
+
+      if (imageUrl) {
+        const newUrl = isURL(imageUrl)
+          ? new URL(imageUrl)
+          : new URL(imageUrl, url.href);
+
+        if (newUrl.host !== url.host) return;
+
+        downloadStatic(newUrl.href, `../www/public${newUrl.pathname}`);
       }
     });
   });
@@ -125,6 +144,7 @@ const processPost = async (topicId: number, rawTopic: string) => {
     return {
       id: post.id,
       raw: post.raw,
+      post_number: post.post_number,
       user: {
         id: post.user_id,
         name: post.name,

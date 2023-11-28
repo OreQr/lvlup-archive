@@ -61,3 +61,12 @@ export const save = (content: any, output: string) => {
 
   fs.writeFileSync(output, content);
 };
+
+export const isURL = (text: string) => {
+  try {
+    new URL(text);
+    return true;
+  } catch (error) {
+    return false;
+  }
+};

@@ -1,4 +1,5 @@
 import { Post, User } from "@/types"
+import * as cheerio from "cheerio"
 import { remark } from "remark"
 import strip from "strip-markdown"
 
@@ -12,6 +13,25 @@ interface RawPost {
 
 const stripMarkdown = async (raw: string) =>
   bbcodeToRaw(String(await remark().use(strip).process(raw)))
+
+export const htmlImagesToMarkdown = (html: string): string => {
+  const $ = cheerio.load(html)
+
+  $("img").each((index, element) => {
+    const imgTag = $(element)
+    const src = imgTag.attr("src")
+    const alt = imgTag.attr("alt")
+    const width = imgTag.attr("width")
+    const height = imgTag.attr("height")
+
+    const markdownImage = `![${alt || ""}${width || ""}${
+      height && width && "x" + height
+    }](${src})`
+    imgTag.replaceWith(markdownImage)
+  })
+
+  return $.text()
+}
 
 export const getDescription = async (markdown: string, length = 160) => {
   const raw = await stripMarkdown(markdown)
