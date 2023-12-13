@@ -3,7 +3,7 @@ const nextConfig = {
   async redirects() {
     return [
       {
-        source: "/:page",
+        source: "/:page(\\d{1,})",
         destination: "/?page=:page",
         permanent: true,
       },
