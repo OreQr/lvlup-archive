@@ -10,9 +10,11 @@ Archiwum oficjalnego forum lvlup.pro
 Instalacja i uruchomienie front-endu:
 
 ```bash
-git clone https://github.com/OreQr/lvlup-archive
+wget https://github.com/OreQr/lvlup-archive/releases/latest/download/lvlup-archive.zip
+unzip lvlup-archive.zip
+rm lvlup-archive.zip
 
-cd ./lvlup-archive/apps/www
+cd ./lvlup-archive
 
 wget https://lvlup.oreq.xyz/forum.zip // Pobranie forum
 unzip forum.zip
