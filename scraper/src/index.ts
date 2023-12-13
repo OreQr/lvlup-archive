@@ -21,7 +21,7 @@ const multibar = new MultiBar(
 const progress = multibar.create(fetch_count, 0, { title: "Posts" });
 const staticProgress = multibar.create(0, 0, { title: "Static files" });
 
-const forumDirectory = "../www/public";
+const forumDirectory = "../public";
 
 const staticLimiter = new Bottleneck({
   maxConcurrent: 10,
@@ -110,7 +110,7 @@ const processPost = async (topicId: number, rawTopic: string) => {
 
         const pathname = newUrl.pathname.split(".").slice(0, -1).join("");
 
-        downloadStatic(newUrl.href, `../www/public${newUrl.pathname}`);
+        downloadStatic(newUrl.href, `../public${newUrl.pathname}`);
 
         post.raw = post.raw.replace(replacementRegex, pathname);
       }
@@ -129,7 +129,7 @@ const processPost = async (topicId: number, rawTopic: string) => {
 
         if (newUrl.host !== url.host) return;
 
-        downloadStatic(newUrl.href, `../www/public${newUrl.pathname}`);
+        downloadStatic(newUrl.href, `../public${newUrl.pathname}`);
       }
     });
   });
@@ -137,7 +137,7 @@ const processPost = async (topicId: number, rawTopic: string) => {
   const comments: Comment[] = posts.slice(1).map((post) => {
     downloadStatic(
       new URL(post.avatar_template.replace("{size}", "250"), url).href,
-      `../www/public${decodeURIComponent(
+      `../public${decodeURIComponent(
         new URL(post.avatar_template, url).pathname,
       )}`,
     );
@@ -161,14 +161,14 @@ const processPost = async (topicId: number, rawTopic: string) => {
   const rawPost = posts[0];
   downloadStatic(
     new URL(rawPost.avatar_template.replace("{size}", "250"), url).href,
-    `../www/public${decodeURIComponent(
+    `../public${decodeURIComponent(
       new URL(rawPost.avatar_template, url).pathname,
     )}`,
   );
   if (topic.image_url) {
     downloadStatic(
       topic.image_url,
-      `../www/public${new URL(topic.image_url).pathname}`,
+      `../public${new URL(topic.image_url).pathname}`,
     );
   }
   const post: Post = {
@@ -199,7 +199,7 @@ const processPost = async (topicId: number, rawTopic: string) => {
     created_at: rawPost.created_at,
   };
 
-  save(JSON.stringify(post), `../www/content/${topicId}.json`);
+  save(JSON.stringify(post), `../content/${topicId}.json`);
 };
 
 (async () => {
