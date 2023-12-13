@@ -1,6 +1,6 @@
 import type { User } from "@/types"
 
-import { UserAvatar } from "./user-avatar"
+import { UserAvatar } from "../user/user-avatar"
 
 export default function UserProfile({ user }: { user: User }) {
   return (

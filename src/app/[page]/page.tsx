@@ -2,7 +2,7 @@ import { PostMetadata } from "@/types"
 
 import { getPosts, getPostsMetadata } from "@/lib/posts"
 import Pagination from "@/components/pagination"
-import PostPreview from "@/components/post-preview"
+import PostPreview from "@/components/post/post-preview"
 
 const PER_PAGE = 20
 const pagesCount = Math.ceil(getPosts().length / PER_PAGE)

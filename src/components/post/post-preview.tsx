@@ -4,9 +4,9 @@ import Gradient from "javascript-color-gradient"
 
 import { Card, CardHeader, CardTitle } from "@/components/ui/card"
 
-import DateTime from "./date-time"
+import DateTime from "../date-time"
+import { UserAvatar } from "../user/user-avatar"
 import PostFooter from "./post-footer"
-import { UserAvatar } from "./user-avatar"
 
 export default function PostPreview({ metadata }: { metadata: PostMetadata }) {
   const commentsColor = (midpoint = 5) => {

@@ -9,10 +9,10 @@ import { getPost, getPostsMetadata } from "@/lib/posts"
 import { Separator } from "@/components/ui/separator"
 import DateTime from "@/components/date-time"
 import Markdown from "@/components/markdown"
-import PostFooter from "@/components/post-footer"
+import PostFooter from "@/components/post/post-footer"
 import PostNav from "@/components/post/post-nav"
 import ScrollPost from "@/components/post/scroll-post"
-import UserProfile from "@/components/user-profile"
+import UserProfile from "@/components/user/user-profile"
 
 export const generateStaticParams = () => {
   const posts = getPostsMetadata()
