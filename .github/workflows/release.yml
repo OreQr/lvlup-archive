@@ -15,7 +15,7 @@ jobs:
 
       - name: Create release
         run: |
-          zip -r lvlup-archive.zip .
+          git archive --format=zip -o lvlup-archive.zip HEAD
 
       - name: Create GitHub release
         id: create_release
