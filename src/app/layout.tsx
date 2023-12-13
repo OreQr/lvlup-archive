@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next"
+import Script from "next/script"
 
 import "@/styles/globals.css"
 import { siteConfig } from "@/config/site"
@@ -57,6 +58,13 @@ export default function RootLayout({ children }: RootLayoutProps) {
           <TailwindIndicator />
         </ThemeProvider>
       </body>
+      {process.env.UMAMI_SCRIPT_SRC && process.env.UMAMI_SCRIPT_ID && (
+        <Script
+          async
+          src={process.env.UMAMI_SCRIPT_SRC}
+          data-website-id={process.env.UMAMI_SCRIPT_ID}
+        />
+      )}
     </html>
   )
 }
