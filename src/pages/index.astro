@@ -1,13 +1,5 @@
 ---
 import Layout from "@/layouts/Layout.astro"
-
-import { TestButton } from "@/components/test-button"
 ---
 
-<Layout title="Welcome to Astro.">
-  <main class="relative flex min-h-screen flex-col">
-    <div class="flex flex-1 flex-col items-center justify-center">
-      <span class="mb-2">Hi 😎</span><TestButton client:load />
-    </div>
-  </main>
-</Layout>
+<Layout><div class="mt-4">Hello, world!</div></Layout>

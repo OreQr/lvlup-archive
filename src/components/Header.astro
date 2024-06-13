@@ -1,0 +1,47 @@
+---
+import { GlobeIcon } from "lucide-react"
+
+import { siteConfig } from "@/config/site"
+import { buttonVariants } from "@/components/ui/button"
+import { Icons } from "@/components/icons"
+import Logo from "@/components/icons/Logo.astro"
+import LogoMark from "@/components/icons/LogoMark.astro"
+---
+
+<header
+  class="sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60"
+>
+  <div class="flex h-16 items-center space-x-4 sm:justify-between sm:space-x-0">
+    <a href="/" class="flex items-end">
+      <LogoMark class="block sm:hidden" />
+      <Logo class="hidden sm:block" />
+      <span class="ml-2 font-mono font-medium leading-none">Archiwum</span>
+    </a>
+    <div class="flex flex-1 items-center justify-end space-x-4">
+      <nav class="flex items-center space-x-1 sm:space-x-2">
+        <a href={siteConfig.links.site} target="_blank" rel="noreferrer">
+          <div
+            class={buttonVariants({
+              size: "icon",
+              variant: "ghost",
+            })}
+          >
+            <GlobeIcon className="h-5 w-5" />
+            <span class="sr-only">Strona</span>
+          </div>
+        </a>
+        <a href={siteConfig.links.github} target="_blank" rel="noreferrer">
+          <div
+            class={buttonVariants({
+              size: "icon",
+              variant: "ghost",
+            })}
+          >
+            <Icons.gitHub className="h-5 w-5" />
+            <span class="sr-only">GitHub</span>
+          </div>
+        </a>
+      </nav>
+    </div>
+  </div>
+</header>

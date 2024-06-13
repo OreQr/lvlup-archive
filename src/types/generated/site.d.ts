@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 export interface Site {
   default_archetype: string
   notification_types: NotificationTypes

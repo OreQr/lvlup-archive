@@ -1,25 +1,64 @@
 ---
 import "@/styles/globals.css"
 import "@fontsource-variable/inter"
+import "@fontsource-variable/jetbrains-mono"
+
+import { SEO } from "astro-seo"
+
+import { siteConfig } from "@/config/site"
+import Footer from "@/components/Footer.astro"
+import Header from "@/components/Header.astro"
+import { TailwindIndicator } from "@/components/tailwind-indicator"
 
 interface Props {
-  title: string
+  title?: string
+  description?: string
 }
 
-const { title } = Astro.props
+const { title, description } = Astro.props
 ---
 
-<!doctype html>
-<html lang="en">
+<script is:inline>
+  const getThemePreference = () => {
+    if (typeof localStorage !== "undefined" && localStorage.getItem("theme")) {
+      return localStorage.getItem("theme")
+    }
+    return window.matchMedia("(prefers-color-scheme: dark)").matches
+      ? "dark"
+      : "light"
+  }
+  const isDark = getThemePreference() === "dark"
+  document.documentElement.classList[isDark ? "add" : "remove"]("dark")
+
+  if (typeof localStorage !== "undefined") {
+    const observer = new MutationObserver(() => {
+      const isDark = document.documentElement.classList.contains("dark")
+      localStorage.setItem("theme", isDark ? "dark" : "light")
+    })
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["class"],
+    })
+  }
+</script>
+
+<html lang="pl">
   <head>
     <meta charset="UTF-8" />
-    <meta name="description" content="Astro description" />
     <meta name="viewport" content="width=devicsse-width" />
     <link rel="icon" type="image/x-icon" href="favicon.ico" />
     <meta name="generator" content={Astro.generator} />
-    <title>{title}</title>
+    <SEO
+      title={title || siteConfig.title}
+      description={description || siteConfig.description}
+    />
   </head>
-  <body class="dark min-h-screen bg-background font-sans antialiased">
-    <slot />
+  <body class="min-h-screen bg-background font-sans antialiased">
+    <div class="mx-auto flex min-h-screen max-w-2xl flex-col px-4">
+      <Header />
+      <div class="flex-1"><slot /></div>
+      <Footer class="border-t" />
+    </div>
+    <TailwindIndicator />
   </body>
 </html>

@@ -3,7 +3,6 @@
   "root": true,
   "extends": [
     "plugin:astro/recommended",
-    "plugin:jsx-a11y/strict",
     "prettier",
     "plugin:tailwindcss/recommended",
     "plugin:@typescript-eslint/recommended"
@@ -16,7 +15,8 @@
     "react/jsx-key": "off",
     "tailwindcss/no-custom-classname": "off",
     "tailwindcss/classnames-order": "off",
-    "@typescript-eslint/ban-ts-comment": "warn"
+    "@typescript-eslint/ban-ts-comment": "warn",
+    "@typescript-eslint/no-explicit-any": "off"
   },
   "settings": {
     "tailwindcss": {
