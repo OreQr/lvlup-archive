@@ -1,16 +1,14 @@
 import { getSite } from "@/lib/site"
 
 interface PostFooter {
-  metadata: {
-    categoryId: number
-    tags: string[]
-  }
+  category_id: number
+  tags: string[]
 }
 
-export default function PostFooter({ metadata }: PostFooter) {
+export default function PostFooter({ category_id, tags }: PostFooter) {
   const site = getSite()
   const category = site.categories.find(
-    (category) => category.id === metadata.categoryId
+    (category) => category.id === category_id
   )!
 
   return (
@@ -22,7 +20,7 @@ export default function PostFooter({ metadata }: PostFooter) {
         />
         <span>{category.name}</span>
       </div>
-      <span>{metadata.tags.join(", ")}</span>
+      <span>{tags.join(", ")}</span>
     </div>
   )
 }

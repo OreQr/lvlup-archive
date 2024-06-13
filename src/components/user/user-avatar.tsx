@@ -1,6 +1,5 @@
-import Image from "next/image"
 import type { User } from "@/types"
-import { AvatarProps } from "@radix-ui/react-avatar"
+import type { AvatarProps } from "@radix-ui/react-avatar"
 
 import { cn } from "@/lib/utils"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
@@ -27,7 +26,12 @@ export function UserAvatar({
       )}
     >
       {user.avatar ? (
-        <Image alt="avatar" width={width} height={height} src={user.avatar} />
+        <img
+          alt={user.username}
+          width={width}
+          height={height}
+          src={user.avatar}
+        />
       ) : (
         <AvatarFallback>
           <span className="sr-only">{user.username}</span>

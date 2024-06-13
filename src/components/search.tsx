@@ -1,8 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import debounce from "lodash/debounce"
-import Link from "next/link"
+import debounce from "lodash.debounce"
 
 import { Input } from "@/components/ui/input"
 
@@ -50,7 +49,7 @@ export default function Search() {
       <ul className="ml-2 space-y-1">
         {searchResult.map((result, index) => (
           <li key={index} className="text-base font-semibold tracking-tight">
-            <Link href={result.url}>{result.meta.title}</Link>
+            <a href={result.url}>{result.meta.title}</a>
           </li>
         ))}
       </ul>

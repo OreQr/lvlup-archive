@@ -1,5 +1,3 @@
-import "server-only"
-
 import fs from "fs"
 
 import type { Site } from "@/types/generated/site"

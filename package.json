@@ -32,6 +32,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "cmdk": "^1.0.0",
+    "javascript-color-gradient": "^2.4.4",
     "lodash.debounce": "^4.0.8",
     "lucide-react": "^0.390.0",
     "react": "^18.3.1",
@@ -45,6 +46,7 @@
   },
   "devDependencies": {
     "@ianvs/prettier-plugin-sort-imports": "^4.2.1",
+    "@types/javascript-color-gradient": "^2.4.2",
     "@types/lodash.debounce": "^4.0.9",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",

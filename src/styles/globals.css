@@ -74,3 +74,9 @@
     @apply bg-background text-foreground;
   }
 }
+
+.disabled {
+  pointer-events: none;
+  cursor: default;
+  opacity: 0.5;
+}
