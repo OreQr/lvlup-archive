@@ -1,7 +1,7 @@
 import * as React from "react"
+import type { NavItem } from "@/types"
 import Image from "next/image"
 import Link from "next/link"
-import { NavItem } from "@/types"
 
 import { cn } from "@/lib/utils"
 

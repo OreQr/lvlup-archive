@@ -1,8 +1,8 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import debounce from "lodash/debounce"
 import Link from "next/link"
-import { debounce } from "lodash"
 
 import { Input } from "@/components/ui/input"
 

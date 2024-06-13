@@ -2,29 +2,43 @@
   "$schema": "https://json.schemastore.org/eslintrc",
   "root": true,
   "extends": [
-    "next/core-web-vitals",
+    "plugin:astro/recommended",
+    "plugin:jsx-a11y/strict",
     "prettier",
-    "plugin:tailwindcss/recommended"
+    "plugin:tailwindcss/recommended",
+    "plugin:@typescript-eslint/recommended"
   ],
+  "env": {
+    "node": true
+  },
   "plugins": ["tailwindcss"],
   "rules": {
-    "@next/next/no-html-link-for-pages": "off",
     "react/jsx-key": "off",
-    "tailwindcss/no-custom-classname": "off"
+    "tailwindcss/no-custom-classname": "off",
+    "tailwindcss/classnames-order": "off",
+    "@typescript-eslint/ban-ts-comment": "warn"
   },
   "settings": {
     "tailwindcss": {
       "callees": ["cn"],
       "config": "tailwind.config.js"
-    },
-    "next": {
-      "rootDir": ["./src"]
     }
   },
   "overrides": [
     {
       "files": ["*.ts", "*.tsx"],
       "parser": "@typescript-eslint/parser"
+    },
+    {
+      "files": ["*.astro"],
+      "parser": "astro-eslint-parser",
+      "parserOptions": {
+        "ecmaVersion": "latest",
+        "parser": "@typescript-eslint/parser",
+        "extraFileExtensions": [".astro"],
+        "project": "./tsconfig.json"
+      },
+      "rules": {}
     }
   ]
 }

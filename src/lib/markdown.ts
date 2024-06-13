@@ -1,4 +1,4 @@
-import { Post, User } from "@/types"
+import type { Post, User } from "@/types"
 import * as cheerio from "cheerio"
 import { remark } from "remark"
 import strip from "strip-markdown"
