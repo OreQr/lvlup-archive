@@ -13,6 +13,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["scripts/**/*.ts"],
+  "include": ["src/scripts/**/*.ts"],
   "exclude": ["node_modules", "scraper"]
 }

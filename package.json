@@ -12,7 +12,7 @@
     "format:check": "prettier --check \"src/**/*.{ts,tsx,astro}\" --cache",
     "lint": "eslint \"src/**/*.{ts,tsx,astro}\"",
     "lint:fix": "eslint --fix \"src/**/*.{ts,tsx,astro}\"",
-    "build:pagefind": "tsx --tsconfig ./tsconfig.scripts.json ./scripts/pagefind.ts"
+    "build:pagefind": "tsx --tsconfig ./tsconfig.scripts.json src/scripts/pagefind.ts"
   },
   "dependencies": {
     "@astrojs/check": "^0.7.0",
