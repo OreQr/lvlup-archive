@@ -12,7 +12,7 @@ export const getStaticPaths = (() => {
         post: post.topic_id,
       },
       props: {
-        url: `${post.slug}/${post.topic_id}`,
+        url: `/t/${post.slug}/${post.topic_id}`,
       },
     }
   })
