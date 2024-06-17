@@ -17,6 +17,7 @@
   "dependencies": {
     "@astrojs/check": "^0.7.0",
     "@astrojs/react": "^3.5.0",
+    "@astrojs/sitemap": "^3.1.5",
     "@astrojs/tailwind": "^5.1.0",
     "@fontsource-variable/inter": "^5.0.18",
     "@fontsource-variable/jetbrains-mono": "^5.0.21",
@@ -28,6 +29,7 @@
     "@radix-ui/react-tooltip": "^1.0.7",
     "@tailwindcss/typography": "^0.5.13",
     "astro": "^4.10.2",
+    "astro-robots-txt": "^1.0.0",
     "astro-seo": "^0.8.4",
     "cheerio": "^1.0.0-rc.12",
     "class-variance-authority": "^0.7.0",
@@ -64,6 +66,7 @@
     "@typescript-eslint/eslint-plugin": "^7.13.0",
     "@typescript-eslint/parser": "^7.13.0",
     "cli-progress": "^3.12.0",
+    "dotenv": "^16.4.5",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-astro": "^1.2.2",
