@@ -1,17 +1,8 @@
-import fs from "fs"
 import { Presets, SingleBar } from "cli-progress"
 
-import type { Site } from "@/types/generated/site"
 import { postToRaw } from "@/lib/markdown"
-import { getPost, getPosts } from "@/lib/posts"
-
-const getSite = () => {
-  const file = fs.readFileSync("public/site.json").toString()
-
-  const site = JSON.parse(file) as Site
-
-  return site
-}
+import { getPosts } from "@/lib/posts"
+import { getSite } from "@/lib/site"
 
 const progress = new SingleBar({}, Presets.shades_classic)
 const site = getSite()
@@ -23,8 +14,7 @@ const indexContent = async () => {
 
   const posts = getPosts()
   progress.start(posts.length, 0)
-  for (const postFile of posts) {
-    const post = getPost(Number(postFile.split(".")[0]))
+  for (const post of posts) {
     const content = await postToRaw(post)
 
     const category = site.categories.find(

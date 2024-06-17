@@ -26,46 +26,46 @@ const { page } = Astro.props
     <a
       class={cn(
         buttonVariants({ variant: "outline" }),
-        "hidden h-8 w-8 p-0 lg:flex",
+        "hidden size-8 p-0 lg:flex",
         page.currentPage === 1 && "disabled"
       )}
       href="/"
     >
       <span class="sr-only">Przejdź do pierwszej strony</span>
-      <ChevronsLeftIcon className="h-4 w-4" />
+      <ChevronsLeftIcon className="size-4" />
     </a>
     <a
       class={cn(
         buttonVariants({ variant: "outline" }),
-        "h-8 w-8 p-0",
+        "size-8 p-0",
         page.currentPage === 1 && "disabled"
       )}
       href={page.url.prev}
     >
       <span class="sr-only">Przejdź do poprzedniej strony</span>
-      <ChevronLeftIcon className="h-4 w-4" />
+      <ChevronLeftIcon className="size-4" />
     </a>
     <a
       class={cn(
         buttonVariants({ variant: "outline" }),
-        "h-8 w-8 p-0",
+        "size-8 p-0",
         page.currentPage === page.lastPage && "disabled"
       )}
       href={page.url.next}
     >
       <span class="sr-only">Przejdź do następnej strony</span>
-      <ChevronRightIcon className="h-4 w-4" />
+      <ChevronRightIcon className="size-4" />
     </a>
     <a
       class={cn(
         buttonVariants({ variant: "outline" }),
-        "hidden h-8 w-8 p-0 lg:flex",
+        "hidden size-8 p-0 lg:flex",
         page.currentPage === page.lastPage && "disabled"
       )}
       href={`/${page.lastPage}`}
     >
       <span class="sr-only">Przejdź do ostatniej strony</span>
-      <ChevronsRightIcon className="h-4 w-4" />
+      <ChevronsRightIcon className="size-4" />
     </a>
   </div>
 </div>

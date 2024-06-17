@@ -1,13 +1,23 @@
-"use client"
-
 import { useEffect } from "react"
 
-export default function ScrollPost({ post_number }: { post_number?: number }) {
+export default function ScrollPost() {
   useEffect(() => {
-    if (!post_number) return
-    const number = isNaN(post_number) ? undefined : post_number
+    const url = window.location.href
+    const hashIndex = url.indexOf("#")
+    const queryIndex = url.indexOf("?")
 
-    const element = document.getElementById(`post-${number}`)
+    const hash =
+      hashIndex !== -1 && (queryIndex === -1 || hashIndex < queryIndex)
+        ? url.substring(
+            hashIndex + 1,
+            queryIndex === -1 ? url.length : queryIndex
+          )
+        : undefined
+
+    const postNumber = hash
+    if (!postNumber) return
+
+    const element = document.getElementById(`post-${postNumber}`)
     if (!element) return
 
     element.scrollIntoView()
@@ -17,7 +27,7 @@ export default function ScrollPost({ post_number }: { post_number?: number }) {
     )
 
     element.classList.add("animate-highlight")
-  }, [post_number])
+  }, [])
 
-  return <></>
+  return null
 }

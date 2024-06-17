@@ -1,5 +1,3 @@
-"use client"
-
 import { useEffect, useState } from "react"
 import { Moon, Sun } from "lucide-react"
 
@@ -29,8 +27,8 @@ export function ThemeToggle() {
       size="icon"
       onClick={() => setTheme(theme === "theme-light" ? "dark" : "theme-light")}
     >
-      <Sun className="h-[1.5rem] w-[1.3rem] dark:hidden" />
-      <Moon className="hidden h-5 w-5 dark:block" />
+      <Sun className="h-6 w-[1.3rem] dark:hidden" />
+      <Moon className="hidden size-5 dark:block" />
       <span className="sr-only">Przełącz motyw</span>
     </Button>
   )

@@ -35,7 +35,7 @@ export function UserAvatar({
       ) : (
         <AvatarFallback>
           <span className="sr-only">{user.username}</span>
-          <Icons.user className="h-4 w-4" />
+          <Icons.user className="size-4" />
         </AvatarFallback>
       )}
     </Avatar>

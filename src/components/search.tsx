@@ -1,5 +1,3 @@
-"use client"
-
 import { useEffect, useState } from "react"
 import debounce from "lodash.debounce"
 
@@ -11,7 +9,6 @@ export default function Search() {
 
   useEffect(() => {
     const importPageFind = async () => {
-      // @ts-ignore
       const pagefindModule = Function("x", "return import(x);")
       setPagefind(await pagefindModule("/pagefind/pagefind.js"))
     }

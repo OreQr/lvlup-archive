@@ -1,8 +1,6 @@
-"use client"
-
 import { useEffect, useState } from "react"
 import { CopyIcon, LinkIcon } from "lucide-react"
-import { CopyToClipboard } from "react-copy-to-clipboard"
+import CopyToClipboard from "react-copy-to-clipboard"
 
 import {
   Dialog,
@@ -26,7 +24,7 @@ export default function SharePost({ post }: { post: { post_number: number } }) {
     setUrl(
       new URL(
         post.post_number !== 1
-          ? location.pathname + `/${post.post_number}`
+          ? location.pathname + `#${post.post_number}`
           : location.pathname,
         location.origin
       ).href
@@ -37,7 +35,7 @@ export default function SharePost({ post }: { post: { post_number: number } }) {
     <Dialog>
       <DialogTrigger asChild>
         <Button variant="ghost" size="icon">
-          <LinkIcon className="h-5 w-5" />
+          <LinkIcon className="size-5" />
           <span className="sr-only">Udostępnij</span>
         </Button>
       </DialogTrigger>
@@ -55,7 +53,7 @@ export default function SharePost({ post }: { post: { post_number: number } }) {
           </div>
           <CopyToClipboard text={url}>
             <Button type="submit" size="sm" className="px-3">
-              <CopyIcon className="h-4 w-4" />
+              <CopyIcon className="size-4" />
               <span className="sr-only">Kopiuj</span>
             </Button>
           </CopyToClipboard>

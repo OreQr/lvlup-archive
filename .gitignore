@@ -29,5 +29,6 @@ public/*
 !public/favicon-16x16.png
 !public/apple-touch-icon.png
 !public/static
+!public/_redirects
 
 content

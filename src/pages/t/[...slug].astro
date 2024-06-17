@@ -1,0 +1,115 @@
+---
+import "@/styles/mdx.css"
+
+import type { GetStaticPaths } from "astro"
+import type { SEOProps } from "astro-seo"
+
+import Layout from "@/layouts/Layout.astro"
+
+import { siteConfig } from "@/config/site"
+import { getDescription } from "@/lib/markdown"
+import { getPosts } from "@/lib/posts"
+import { Separator } from "@/components/ui/separator"
+import DateTime from "@/components/date-time"
+import Markdown from "@/components/Markdown.astro"
+import PostFooter from "@/components/post/post-footer"
+import PostNav from "@/components/post/post-nav"
+import ScrollPost from "@/components/post/scroll-post"
+import UserProfile from "@/components/user/user-profile"
+
+export const getStaticPaths = (() => {
+  const posts = getPosts()
+
+  return posts.map((post) => {
+    return {
+      params: {
+        slug: `${post.slug}/${post.topic_id}`,
+      },
+      props: {
+        post,
+      },
+    }
+  })
+}) satisfies GetStaticPaths
+
+const { post } = Astro.props
+
+async function generateMetadata(): Promise<SEOProps> {
+  const title =
+    (post.fancy_title ? post.fancy_title : post.title) +
+    ` - ${siteConfig.title}`
+  const description = await getDescription(post.raw)
+
+  const image = post.image || ""
+
+  return {
+    title,
+    description,
+    openGraph: {
+      basic: {
+        title,
+        type: "article",
+        image,
+        url: `/t/${post.slug}/${post.topic_id}`,
+      },
+      optional: {
+        siteName: siteConfig.title,
+        description,
+      },
+      article: {
+        publishedTime: post.created_at,
+        tags: post.tags,
+      },
+    },
+    twitter: {
+      title,
+      description,
+      card: "summary_large_image",
+      image,
+    },
+  }
+}
+---
+
+<Layout metadata={await generateMetadata()}>
+  <ScrollPost client:load />
+  <div class="space-y-4">
+    <div class="space-y-1.5">
+      <div class="space-y-4">
+        <div class="space-y-1.5">
+          <h1 class="text-2xl font-semibold">
+            {post.fancy_title ? post.fancy_title : post.title}
+          </h1>
+          <PostFooter category_id={post.category_id} tags={post.tags} />
+        </div>
+        <div class="flex items-center justify-between">
+          <UserProfile user={post.user} />
+          <DateTime client:load time={post.created_at} />
+        </div>
+      </div>
+      <article>
+        <Markdown content={post.raw} />
+      </article>
+      <PostNav client:load post={{ ...post, post_number: 1 }} />
+    </div>
+    <div class="space-y-4">
+      {
+        post.comments.map((comment) => (
+          <div class="space-y-4" id={`post-${comment.post_number}`}>
+            <Separator />
+            <div class="space-y-1.5">
+              <div class="flex items-center justify-between">
+                <UserProfile user={comment.user} />
+                <DateTime client:load time={comment.created_at} />
+              </div>
+              <div>
+                <Markdown content={comment.raw} />
+              </div>
+              <PostNav client:load post={comment} />
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</Layout>

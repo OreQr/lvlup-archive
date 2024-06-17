@@ -1,7 +1,4 @@
-"use client"
-
 import * as React from "react"
-import NextImage, { ImageProps } from "next/image"
 import type { MDXComponents } from "mdx/types"
 import { MDXRemote, type MDXRemoteSerializeResult } from "next-mdx-remote"
 
@@ -103,7 +100,6 @@ const components: MDXComponents = {
     alt,
     ...props
   }: React.ImgHTMLAttributes<HTMLImageElement>) => (
-    // eslint-disable-next-line @next/next/no-img-element
     <img className={cn("rounded-md border", className)} alt={alt} {...props} />
   ),
   hr: ({ ...props }) => <hr className="my-4 md:my-8" {...props} />,
@@ -154,7 +150,6 @@ const components: MDXComponents = {
       {...props}
     />
   ),
-  Image: (props: ImageProps) => <NextImage {...props} />,
   Callout,
   Card: MdxCard,
 }

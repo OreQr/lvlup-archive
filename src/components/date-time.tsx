@@ -1,5 +1,3 @@
-"use client"
-
 import { formatDate } from "@/lib/date"
 
 export default function DateTime({

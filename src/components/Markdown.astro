@@ -1,0 +1,73 @@
+---
+import { serialize } from "next-mdx-remote/serialize"
+import rehypeAutolinkHeadings from "rehype-autolink-headings"
+import rehypePrettyCode from "rehype-pretty-code"
+import rehypeSlug from "rehype-slug"
+import emoji from "remark-emoji"
+import remarkGfm from "remark-gfm"
+
+import { bbcodeToMarkdown } from "@/lib/bbcode"
+import { htmlImagesToMarkdown } from "@/lib/markdown"
+import { rewriteURL } from "@/lib/rewrites"
+
+import { MdxContent } from "./mdx-content"
+
+export interface Props {
+  content: string
+}
+
+const { content } = Astro.props
+
+const source = rewriteURL(
+  bbcodeToMarkdown(htmlImagesToMarkdown(content)),
+  import.meta.env.FORUM_URL!,
+  import.meta.env.APP_URL!
+)
+
+const serialized = await serialize(source, {
+  mdxOptions: {
+    // @ts-expect-error - Type error
+    remarkPlugins: [remarkGfm, emoji],
+    rehypePlugins: [
+      rehypeSlug,
+      [
+        // @ts-expect-error - Type error
+        rehypePrettyCode,
+        {
+          theme: "github-dark",
+          keepBackground: false,
+          onVisitLine(node: { children: string | any[] }) {
+            // Prevent lines from collapsing in `display: grid` mode, and allow empty
+            // lines to be copy/pasted
+            if (node.children.length === 0) {
+              node.children = [{ type: "text", value: " " }]
+            }
+          },
+          onVisitHighlightedLine(node: {
+            properties: { className: string[] }
+          }) {
+            node.properties.className.push("line--highlighted")
+          },
+          onVisitHighlightedWord(node: {
+            properties: { className: string[] }
+          }) {
+            node.properties.className = ["word--highlighted"]
+          },
+        },
+      ],
+      [
+        rehypeAutolinkHeadings,
+        {
+          properties: {
+            className: ["subheading-anchor"],
+            ariaLabel: "Link do sekcji",
+          },
+        },
+      ],
+    ],
+    format: "md",
+  },
+})
+---
+
+<MdxContent source={serialized} />
