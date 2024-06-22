@@ -1,7 +1,7 @@
 import { Presets, SingleBar } from "cli-progress"
 
 import { postToRaw } from "@/lib/markdown"
-import { getPosts } from "@/lib/posts"
+import { posts } from "@/lib/posts"
 import { site } from "@/lib/site"
 
 const progress = new SingleBar({}, Presets.shades_classic)
@@ -11,7 +11,6 @@ const indexContent = async () => {
   const { index } = await createIndex({})
   if (!index) return
 
-  const posts = getPosts()
   progress.start(posts.length, 0)
   for (const post of posts) {
     const content = await postToRaw(post)

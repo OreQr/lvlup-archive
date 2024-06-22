@@ -4,14 +4,12 @@ import type { Page } from "astro"
 
 import Layout from "@/layouts/Layout.astro"
 
-import { getPosts } from "@/lib/posts"
+import { posts } from "@/lib/posts"
 import Pagination from "@/components/Pagination.astro"
 import PostPreview from "@/components/post/PostPreview.astro"
 import Search from "@/components/search"
 
 export function getStaticPaths({ paginate }) {
-  const posts = getPosts()
-
   return paginate(posts, {
     pageSize: 20,
   })

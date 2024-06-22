@@ -8,7 +8,7 @@ import Layout from "@/layouts/Layout.astro"
 
 import { siteConfig } from "@/config/site"
 import { getDescription } from "@/lib/markdown"
-import { getPosts } from "@/lib/posts"
+import { posts } from "@/lib/posts"
 import { Separator } from "@/components/ui/separator"
 import DateTime from "@/components/date-time"
 import Markdown from "@/components/Markdown.astro"
@@ -19,8 +19,6 @@ import SharePost from "@/components/post/share-post"
 import UserProfile from "@/components/user/user-profile"
 
 export const getStaticPaths = (() => {
-  const posts = getPosts()
-
   return posts.map((post) => {
     return {
       params: {

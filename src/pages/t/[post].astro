@@ -1,11 +1,9 @@
 ---
 import type { GetStaticPaths } from "astro"
 
-import { getPosts } from "@/lib/posts"
+import { posts } from "@/lib/posts"
 
 export const getStaticPaths = (() => {
-  const posts = getPosts()
-
   return posts.map((post) => {
     return {
       params: {
