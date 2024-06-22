@@ -1,4 +1,4 @@
-import { getSite } from "@/lib/site"
+import { site } from "@/lib/site"
 
 interface PostFooter {
   category_id: number
@@ -6,7 +6,6 @@ interface PostFooter {
 }
 
 export default function PostFooter({ category_id, tags }: PostFooter) {
-  const site = getSite()
   const category = site.categories.find(
     (category) => category.id === category_id
   )!

@@ -9,3 +9,11 @@ export const getSite = () => {
 
   return site
 }
+
+const globalForSite = globalThis as unknown as {
+  site: Site | undefined
+}
+
+export const site = globalForSite.site ?? getSite()
+
+if (process.env.NODE_ENV !== "production") globalForSite.site = site

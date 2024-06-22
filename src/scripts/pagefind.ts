@@ -2,10 +2,9 @@ import { Presets, SingleBar } from "cli-progress"
 
 import { postToRaw } from "@/lib/markdown"
 import { getPosts } from "@/lib/posts"
-import { getSite } from "@/lib/site"
+import { site } from "@/lib/site"
 
 const progress = new SingleBar({}, Presets.shades_classic)
-const site = getSite()
 
 const indexContent = async () => {
   const { createIndex, close } = await import("pagefind")
