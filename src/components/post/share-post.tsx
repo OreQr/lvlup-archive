@@ -17,19 +17,19 @@ import { Label } from "@/components/ui/label"
 
 import { Button } from "../ui/button"
 
-export default function SharePost({ post }: { post: { post_number: number } }) {
+export default function SharePost({ post_number }: { post_number: number }) {
   const [url, setUrl] = useState<string>("")
 
   useEffect(() => {
     setUrl(
       new URL(
-        post.post_number !== 1
-          ? location.pathname + `#${post.post_number}`
+        post_number !== 1
+          ? location.pathname + `#${post_number}`
           : location.pathname,
         location.origin
       ).href
     )
-  }, [post.post_number])
+  }, [post_number])
 
   return (
     <Dialog>
@@ -41,7 +41,7 @@ export default function SharePost({ post }: { post: { post_number: number } }) {
       </DialogTrigger>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>Udostępnij post #{post.post_number}</DialogTitle>
+          <DialogTitle>Udostępnij post #{post_number}</DialogTitle>
           <DialogDescription>Udostępnij link do tego posta.</DialogDescription>
         </DialogHeader>
         <div className="flex items-center space-x-2">

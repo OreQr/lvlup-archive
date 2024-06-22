@@ -13,8 +13,9 @@ import { Separator } from "@/components/ui/separator"
 import DateTime from "@/components/date-time"
 import Markdown from "@/components/Markdown.astro"
 import PostFooter from "@/components/post/post-footer"
-import PostNav from "@/components/post/post-nav"
+import PostNav from "@/components/post/PostNav.astro"
 import ScrollPost from "@/components/post/scroll-post"
+import SharePost from "@/components/post/share-post"
 import UserProfile from "@/components/user/user-profile"
 
 export const getStaticPaths = (() => {
@@ -90,7 +91,9 @@ async function generateMetadata(): Promise<SEOProps> {
       <article>
         <Markdown content={post.raw} />
       </article>
-      <PostNav client:load post={{ ...post, post_number: 1 }} />
+      <PostNav>
+        <SharePost client:load post_number={1} />
+      </PostNav>
     </div>
     <div class="space-y-4">
       {
@@ -105,7 +108,9 @@ async function generateMetadata(): Promise<SEOProps> {
               <div>
                 <Markdown content={comment.raw} />
               </div>
-              <PostNav client:load post={comment} />
+              <PostNav>
+                <SharePost client:load post_number={comment.post_number} />
+              </PostNav>
             </div>
           </div>
         ))
