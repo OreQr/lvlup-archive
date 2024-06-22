@@ -50,7 +50,7 @@ const { post } = Astro.props
       >
         {post.comments.length}
       </span>
-      <DateTime client:load time={post.created_at} mode="short" />
+      <DateTime client:only="react" time={post.created_at} mode="short" />
     </div>
   </Card>
 </a>

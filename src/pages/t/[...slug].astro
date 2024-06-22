@@ -83,7 +83,7 @@ async function generateMetadata(): Promise<SEOProps> {
         </div>
         <div class="flex items-center justify-between">
           <UserProfile user={post.user} />
-          <DateTime client:load time={post.created_at} />
+          <DateTime client:only="react" time={post.created_at} />
         </div>
       </div>
       <article>
@@ -101,7 +101,7 @@ async function generateMetadata(): Promise<SEOProps> {
             <div class="space-y-1.5">
               <div class="flex items-center justify-between">
                 <UserProfile user={comment.user} />
-                <DateTime client:load time={comment.created_at} />
+                <DateTime client:only="react" time={comment.created_at} />
               </div>
               <div>
                 <Markdown content={comment.raw} />
