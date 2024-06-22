@@ -1,5 +1,4 @@
-dist/*
-.cache
-public
+dist
 node_modules
-*.esm.js
+public
+content

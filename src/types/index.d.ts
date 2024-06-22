@@ -1,10 +1,3 @@
-export interface NavItem {
-  title: string
-  href?: string
-  disabled?: boolean
-  external?: boolean
-}
-
 export interface User {
   id: number
   name: string
@@ -40,16 +33,4 @@ export interface Comment {
   user: User
   updated_at: string
   created_at: string
-}
-
-export interface PostMetadata {
-  id: number
-  topicId: number
-  user: User
-  categoryId: number
-  title: string
-  tags: string[]
-  comments: number
-  slug: string
-  createdAt: Date
 }

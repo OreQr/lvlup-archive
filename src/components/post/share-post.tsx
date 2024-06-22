@@ -1,8 +1,6 @@
-"use client"
-
 import { useEffect, useState } from "react"
 import { CopyIcon, LinkIcon } from "lucide-react"
-import { CopyToClipboard } from "react-copy-to-clipboard"
+import CopyToClipboard from "react-copy-to-clipboard"
 
 import {
   Dialog,
@@ -19,31 +17,31 @@ import { Label } from "@/components/ui/label"
 
 import { Button } from "../ui/button"
 
-export default function SharePost({ post }: { post: { post_number: number } }) {
+export default function SharePost({ post_number }: { post_number: number }) {
   const [url, setUrl] = useState<string>("")
 
   useEffect(() => {
     setUrl(
       new URL(
-        post.post_number !== 1
-          ? location.pathname + `/${post.post_number}`
+        post_number !== 1
+          ? location.pathname + `#${post_number}`
           : location.pathname,
         location.origin
       ).href
     )
-  }, [post.post_number])
+  }, [post_number])
 
   return (
     <Dialog>
       <DialogTrigger asChild>
         <Button variant="ghost" size="icon">
-          <LinkIcon className="h-5 w-5" />
+          <LinkIcon className="size-5" />
           <span className="sr-only">Udostępnij</span>
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>Udostępnij post #{post.post_number}</DialogTitle>
+          <DialogTitle>Udostępnij post #{post_number}</DialogTitle>
           <DialogDescription>Udostępnij link do tego posta.</DialogDescription>
         </DialogHeader>
         <div className="flex items-center space-x-2">
@@ -55,7 +53,7 @@ export default function SharePost({ post }: { post: { post_number: number } }) {
           </div>
           <CopyToClipboard text={url}>
             <Button type="submit" size="sm" className="px-3">
-              <CopyIcon className="h-4 w-4" />
+              <CopyIcon className="size-4" />
               <span className="sr-only">Kopiuj</span>
             </Button>
           </CopyToClipboard>

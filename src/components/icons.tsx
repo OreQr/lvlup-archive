@@ -1,29 +1,9 @@
-import Image from "next/image"
-import {
-  Globe,
-  LucideProps,
-  Moon,
-  SunMedium,
-  User,
-  type XIcon as LucideIcon,
-} from "lucide-react"
+import { User, type XIcon as LucideIcon, type LucideProps } from "lucide-react"
 
 export type Icon = typeof LucideIcon
 
 export const Icons = {
-  sun: SunMedium,
-  moon: Moon,
   user: User,
-  globe: Globe,
-  logo: () => (
-    <Image
-      src="/static/icon.png"
-      alt="logo"
-      width={200}
-      height={200}
-      className="h-10 w-10"
-    />
-  ),
   gitHub: (props: LucideProps) => (
     <svg viewBox="0 0 438.549 438.549" {...props}>
       <path

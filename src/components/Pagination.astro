@@ -1,0 +1,71 @@
+---
+import type { Page } from "astro"
+import {
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  ChevronsLeftIcon,
+  ChevronsRightIcon,
+} from "lucide-react"
+
+import { cn } from "@/lib/utils"
+
+import { buttonVariants } from "./ui/button"
+
+export interface Props {
+  page: Page
+}
+
+const { page } = Astro.props
+---
+
+<div class="flex items-center justify-end space-x-4 px-2 lg:space-x-8">
+  <div class="flex items-center justify-center text-sm font-medium">
+    Strona {page.currentPage} z {page.lastPage}
+  </div>
+  <div class="flex items-center space-x-2">
+    <a
+      class={cn(
+        buttonVariants({ variant: "outline" }),
+        "hidden size-8 p-0 lg:flex",
+        page.currentPage === 1 && "disabled"
+      )}
+      href="/"
+    >
+      <span class="sr-only">Przejdź do pierwszej strony</span>
+      <ChevronsLeftIcon className="size-4" />
+    </a>
+    <a
+      class={cn(
+        buttonVariants({ variant: "outline" }),
+        "size-8 p-0",
+        page.currentPage === 1 && "disabled"
+      )}
+      href={page.url.prev}
+    >
+      <span class="sr-only">Przejdź do poprzedniej strony</span>
+      <ChevronLeftIcon className="size-4" />
+    </a>
+    <a
+      class={cn(
+        buttonVariants({ variant: "outline" }),
+        "size-8 p-0",
+        page.currentPage === page.lastPage && "disabled"
+      )}
+      href={page.url.next}
+    >
+      <span class="sr-only">Przejdź do następnej strony</span>
+      <ChevronRightIcon className="size-4" />
+    </a>
+    <a
+      class={cn(
+        buttonVariants({ variant: "outline" }),
+        "hidden size-8 p-0 lg:flex",
+        page.currentPage === page.lastPage && "disabled"
+      )}
+      href={`/${page.lastPage}`}
+    >
+      <span class="sr-only">Przejdź do ostatniej strony</span>
+      <ChevronsRightIcon className="size-4" />
+    </a>
+  </div>
+</div>

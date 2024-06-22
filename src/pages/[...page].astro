@@ -1,0 +1,33 @@
+---
+import type { Post } from "@/types"
+import type { Page } from "astro"
+
+import Layout from "@/layouts/Layout.astro"
+
+import { posts } from "@/lib/posts"
+import Pagination from "@/components/Pagination.astro"
+import PostPreview from "@/components/post/PostPreview.astro"
+import Search from "@/components/Search.astro"
+
+export function getStaticPaths({ paginate }) {
+  return paginate(posts, {
+    pageSize: 20,
+  })
+}
+
+export interface Props {
+  page: Page<Post>
+}
+
+const { page } = Astro.props
+---
+
+<Layout>
+  <Search />
+  <div class="space-y-4">
+    <div class="flex flex-col space-y-2">
+      {page.data.map((post) => <PostPreview post={post} />)}
+    </div>
+    <Pagination page={page} />
+  </div>
+</Layout>

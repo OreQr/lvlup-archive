@@ -1,5 +1,3 @@
-"use client"
-
 import { formatDate } from "@/lib/date"
 
 export default function DateTime({
@@ -13,7 +11,7 @@ export default function DateTime({
 
   return (
     <span
-      title={date.toLocaleString()}
+      title={date.toLocaleString("pl")}
       className="text-sm text-muted-foreground"
     >
       {formatDate(date, mode)}

@@ -1,0 +1,24 @@
+---
+import type { GetStaticPaths } from "astro"
+
+import { posts } from "@/lib/posts"
+
+export const getStaticPaths = (() => {
+  return posts.map((post) => {
+    return {
+      params: {
+        post: post.topic_id,
+      },
+      props: {
+        url: `/t/${post.slug}/${post.topic_id}`,
+      },
+    }
+  })
+}) satisfies GetStaticPaths
+
+const { url } = Astro.props
+---
+
+<head>
+  <meta http-equiv="refresh" content={`0; url=${url}`} />
+</head>

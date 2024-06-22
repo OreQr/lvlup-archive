@@ -1,0 +1,21 @@
+---
+import { Image, type ImgAttributes } from "astro:assets"
+
+import { cn } from "@/lib/utils"
+
+import logoMark from "/public/static/icon.png"
+
+export interface Props extends Partial<ImgAttributes> {}
+
+const props = Astro.props
+---
+
+<Image
+  src={logoMark}
+  alt="Logo mark"
+  width={40}
+  height={40}
+  loading="eager"
+  {...props}
+  class={cn("size-10", props.class)}
+/>

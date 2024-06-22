@@ -1,0 +1,56 @@
+---
+import type { Post } from "@/types"
+import Gradient from "javascript-color-gradient"
+
+import { Card, CardHeader, CardTitle } from "@/components/ui/card"
+
+import DateTime from "../date-time"
+import { UserAvatar } from "../user/user-avatar"
+import PostFooter from "./post-footer"
+
+const commentsColor = (midpoint = 5) => {
+  const colorIndex = Math.round((midpoint * post.comments.length) / 10)
+
+  const gradient = new Gradient()
+    .setColorGradient("#71717a", "#fe7a15")
+    .setMidpoint(midpoint)
+    .getColor(colorIndex === 0 ? 0.01 : colorIndex)
+
+  return gradient
+}
+
+export interface Props {
+  post: Post
+}
+
+const { post } = Astro.props
+---
+
+<a href={`/t/${post.slug}/${post.topic_id}`}>
+  <Card className="flex items-center justify-between">
+    <div class="flex items-center">
+      <UserAvatar
+        title={post.user.username}
+        user={post.user}
+        width={250}
+        height={250}
+        className="ml-6 hidden sm:block"
+      />
+      <CardHeader className="pr-2 sm:pr-4">
+        <CardTitle className="text-base">{post.title}</CardTitle>
+        <PostFooter category_id={post.category_id} tags={post.tags} />
+      </CardHeader>
+    </div>
+    <div class="flex flex-col items-end pr-6">
+      <span
+        class="font-medium"
+        style={{
+          color: commentsColor(),
+        }}
+      >
+        {post.comments.length}
+      </span>
+      <DateTime client:only="react" time={post.created_at} mode="short" />
+    </div>
+  </Card>
+</a>

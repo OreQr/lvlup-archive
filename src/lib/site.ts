@@ -1,13 +1,19 @@
-import "server-only"
 import fs from "fs"
-import { cache } from "react"
 
 import type { Site } from "@/types/generated/site"
 
-export const getSite = cache(() => {
+const getSite = () => {
   const file = fs.readFileSync("public/site.json").toString()
 
   const site = JSON.parse(file) as Site
 
   return site
-})
+}
+
+const globalForSite = globalThis as unknown as {
+  site: Site | undefined
+}
+
+export const site = globalForSite.site ?? getSite()
+
+if (process.env.NODE_ENV !== "production") globalForSite.site = site
