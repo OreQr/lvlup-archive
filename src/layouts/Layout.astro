@@ -58,7 +58,7 @@ const { metadata } = Astro.props
   <body class="min-h-screen bg-background font-sans antialiased">
     <div class="mx-auto flex min-h-screen max-w-2xl flex-col px-4">
       <Header />
-      <div class="flex-1 py-6"><slot /></div>
+      <div class="flex-1 break-words py-6"><slot /></div>
       <Footer class="border-t" />
     </div>
     <TailwindIndicator />

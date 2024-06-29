@@ -12,7 +12,7 @@ export default function DateTime({
   return (
     <span
       title={date.toLocaleString("pl")}
-      className="text-sm text-muted-foreground"
+      className="text-sm text-muted-foreground break-keep"
     >
       {formatDate(date, mode)}
     </span>
