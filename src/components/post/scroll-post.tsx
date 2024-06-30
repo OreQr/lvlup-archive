@@ -2,19 +2,22 @@ import { useEffect } from "react"
 
 export default function ScrollPost() {
   useEffect(() => {
-    const url = window.location.href
-    const hashIndex = url.indexOf("#")
-    const queryIndex = url.indexOf("?")
+    const hash = (() => {
+      const url = location.href
+      const hashIndex = url.indexOf("#")
+      if (hashIndex !== -1) {
+        let endIndex = url.indexOf("?", hashIndex)
+        if (endIndex === -1) {
+          endIndex = url.indexOf("/", hashIndex)
+        }
+        return endIndex !== -1
+          ? url.substring(hashIndex + 1, endIndex)
+          : url.substring(hashIndex + 1)
+      }
+      return null
+    })()
 
-    const hash =
-      hashIndex !== -1 && (queryIndex === -1 || hashIndex < queryIndex)
-        ? url.substring(
-            hashIndex + 1,
-            queryIndex === -1 ? url.length : queryIndex
-          )
-        : undefined
-
-    const postNumber = hash
+    const postNumber = parseInt(hash)
     if (!postNumber) return
 
     const element = document.getElementById(`post-${postNumber}`)
