@@ -28,6 +28,9 @@ const indexContent = async () => {
           image: post.image || undefined,
           kategoria: category.name,
         },
+        filters: {
+          kategoria: [category.name],
+        },
         language: "pl",
       })
       progress.increment()
