@@ -34,9 +34,7 @@ export const getStaticPaths = (() => {
 const { post } = Astro.props
 
 async function generateMetadata(): Promise<SEOProps> {
-  const title =
-    (post.fancy_title ? post.fancy_title : post.title) +
-    ` - ${siteConfig.title}`
+  const title = post.fancy_title ? post.fancy_title : post.title
   const description = await getDescription(post.raw)
 
   const image = post.image || ""

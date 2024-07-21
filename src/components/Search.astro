@@ -1,3 +1,19 @@
+---
+import pick from "lodash/pick"
+
+import { site } from "@/lib/site"
+import SearchBar from "@/components/search-bar"
+
+const categories = site.categories.map((category) =>
+  pick(category, ["id", "slug", "name", "color"])
+)
+
+export interface Props {
+  defaultCategory?: number
+}
+const { defaultCategory } = Astro.props
+---
+
 <style>
   html.dark {
     --pagefind-ui-primary: #eeeeee;
@@ -11,9 +27,14 @@
 <link href="/pagefind/pagefind-ui.css" rel="stylesheet" />
 <script is:inline src="/pagefind/pagefind-ui.js"></script>
 
-<div id="search" class="mb-4"></div>
+<div id="search" class="mb-2"></div>
 <script is:inline>
   window.addEventListener("DOMContentLoaded", () => {
     new PagefindUI({ element: "#search" })
   })
 </script>
+<SearchBar
+  defaultCategory={defaultCategory}
+  categories={categories}
+  client:load
+/>

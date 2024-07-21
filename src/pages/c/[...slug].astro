@@ -1,0 +1,62 @@
+---
+import Layout from "@/layouts/Layout.astro"
+
+import { posts } from "@/lib/posts"
+import { site } from "@/lib/site"
+import { CategoryPost, CategoryPostContainer } from "@/components/category-post"
+import DateTime from "@/components/date-time"
+import InfinityPostLoading from "@/components/infinity-post-loading"
+import Search from "@/components/Search.astro"
+
+export function getStaticPaths() {
+  return site.categories.map((category) => {
+    const categoryPosts = posts.filter(
+      (post) => post.category_id === category.id
+    )
+
+    return {
+      params: {
+        slug: `${category.slug}/${category.id}`,
+      },
+      props: {
+        category,
+        categoryPosts: categoryPosts.slice(
+          0,
+          import.meta.env.MAX_CATEGORY_POSTS
+        ),
+        enable: import.meta.env.MAX_CATEGORY_POSTS < categoryPosts.length,
+      },
+    }
+  })
+}
+
+const { categoryPosts, category, enable } = Astro.props
+---
+
+<Layout metadata={{ title: category.name }}>
+  <Search defaultCategory={category.id} />
+  <CategoryPostContainer>
+    <li>
+      <CategoryPostContainer>
+        {
+          categoryPosts.map((post) => (
+            <CategoryPost post={post}>
+              <DateTime
+                client:only="react"
+                time={post.created_at}
+                mode="short"
+              />
+            </CategoryPost>
+          ))
+        }
+      </CategoryPostContainer>
+    </li>
+    {
+      enable && (
+        <li>
+          <InfinityPostLoading categoryId={category.id} client:visible />
+        </li>
+      )
+    }
+  </CategoryPostContainer>
+</Layout>

@@ -50,9 +50,11 @@ const { metadata } = Astro.props
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <meta name="generator" content={Astro.generator} />
     <SEO
-      title={siteConfig.title}
       description={siteConfig.description}
       {...metadata}
+      title={metadata?.title
+        ? metadata.title + " - " + siteConfig.title
+        : siteConfig.title}
     />
   </head>
   <body class="min-h-screen bg-background font-sans antialiased">
