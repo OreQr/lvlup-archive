@@ -81,6 +81,9 @@ export default {
         "accordion-up": "accordion-up 0.2s ease-out",
         highlight: "highlight 3s",
       },
+      maxWidth: {
+        "2xl": "671px", // Changed from 42rem (672px) because of chromium bug
+      },
     },
   },
   plugins: [require("tailwindcss-animate"), require("@tailwindcss/typography")],
