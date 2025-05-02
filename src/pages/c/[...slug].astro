@@ -33,7 +33,9 @@ export function getStaticPaths() {
 const { categoryPosts, category, enable } = Astro.props
 ---
 
-<Layout metadata={{ title: category.name }}>
+<Layout
+  metadata={{ title: category.name, description: category.description_text }}
+>
   <Search defaultCategory={category.id} />
   <CategoryPostContainer>
     <li>
