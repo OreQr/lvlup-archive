@@ -1,3 +1,9 @@
+> [!WARNING]
+>
+> **Projekt jest archiwalny i nie jest już aktywnie rozwijany.**
+>
+> Nadal działa (na starszych wersjach zależności) i można z niego korzystać, lecz aktualizacje będą pojawiać się tylko w ramach drobnych poprawek.
+
 <img src="https://raw.githubusercontent.com/OreQr/lvlup-archive/main/public/static/logo.png" alt="logo" height="100">
 
 ![Astro](https://img.shields.io/badge/astro-%232C2052.svg?style=for-the-badge&logo=astro&logoColor=white)
