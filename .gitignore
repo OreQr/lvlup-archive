@@ -34,3 +34,6 @@ public/*
 content
 
 forum.zip
+
+# local Netlify folder
+.netlify
