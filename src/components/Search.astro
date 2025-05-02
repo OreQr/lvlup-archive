@@ -30,7 +30,7 @@ const { defaultCategory } = Astro.props
 <div id="search" class="mb-2"></div>
 <script is:inline>
   window.addEventListener("DOMContentLoaded", () => {
-    new PagefindUI({ element: "#search" })
+    new PagefindUI({ element: "#search", showEmptyFilters: false })
   })
 </script>
 <SearchBar
