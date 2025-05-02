@@ -1,9 +1,17 @@
+import fs from "fs"
+import path from "path"
+import { fileURLToPath } from "url"
 import { Presets, SingleBar } from "cli-progress"
 import { close, createIndex } from "pagefind"
 
 import { postToRaw } from "@/lib/markdown"
 import { posts } from "@/lib/posts"
 import { site } from "@/lib/site"
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
+
+const pagefindDir = path.join(__dirname, "../../public/pagefind")
 
 const progress = new SingleBar({}, Presets.shades_classic)
 
@@ -38,11 +46,18 @@ const indexContent = async () => {
   )
 
   await index.writeFiles({
-    outputPath: "public/pagefind",
+    outputPath: pagefindDir,
   })
   await close()
 
   progress.stop()
 }
 
+const cleanup = () => {
+  if (fs.existsSync(pagefindDir)) {
+    fs.rmSync(pagefindDir, { recursive: true, force: true })
+  }
+}
+
+cleanup()
 indexContent()
