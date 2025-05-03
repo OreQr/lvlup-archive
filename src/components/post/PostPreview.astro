@@ -1,6 +1,5 @@
 ---
 import type { Post } from "@/types"
-import Gradient from "javascript-color-gradient"
 
 import { Card, CardHeader, CardTitle } from "@/components/ui/card"
 
@@ -8,15 +7,32 @@ import DateTime from "../date-time"
 import { UserAvatar } from "../user/user-avatar"
 import PostFooter from "./post-footer"
 
-const commentsColor = (midpoint = 5) => {
-  const colorIndex = Math.round((midpoint * post.comments.length) / 10)
+// Interpolates between two RGB colors based on a factor (0-1)
+const interpolateColor = (
+  start: { r: number; g: number; b: number },
+  end: { r: number; g: number; b: number },
+  factor: number
+) => {
+  const r = Math.round(start.r + (end.r - start.r) * factor)
+  const g = Math.round(start.g + (end.g - start.g) * factor)
+  const b = Math.round(start.b + (end.b - start.b) * factor)
 
-  const gradient = new Gradient()
-    .setColorGradient("#71717a", "#fe7a15")
-    .setMidpoint(midpoint)
-    .getColor(colorIndex === 0 ? 0.01 : colorIndex)
+  return `rgb(${r}, ${g}, ${b})`
+}
 
-  return gradient
+// Determines the color for comment count display
+const commentsColor = () => {
+  const max = 6
+  const value = post.comments.length
+
+  const gray = { r: 113, g: 113, b: 122 } // #71717a
+  const orange = { r: 254, g: 122, b: 21 } // #fe7a15
+
+  if (value <= 1) return `rgb(${gray.r}, ${gray.g}, ${gray.b})`
+
+  const ratio = Math.min(value / max, 1)
+
+  return interpolateColor(gray, orange, ratio)
 }
 
 export interface Props {
